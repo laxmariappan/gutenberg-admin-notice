@@ -88,7 +88,7 @@ function gnotice_rest_init() {
 		array(
 			'methods'             => \WP_REST_Server::READABLE,
 			'callback'            => 'get_email_notification',
-			'permission_callback' => '__return_true',
+			'permission_callback' => function() { return current_user_can('edit_posts'); },
 		)
 	);
 }
