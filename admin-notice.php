@@ -130,13 +130,10 @@ function email_notification_script() {
 
 		function checkNotificationAfterPublish(){
 			const postId = wp.data.select("core/editor").getCurrentPostId();
-			$.ajax({
-				type: 'GET',
-				dataType: 'json',
-				crossDomain : true,
-				url: '<?php echo esc_html( get_site_url() ); ?>/wp-json/api-gnotice/v1/check-email-response',
-				data: {id: postId},
-				success: function(response){
+			wp.apiFetch({
+				url: `/wp-json/api-gnotice/v1/check-email-response?id=${postId}`,
+			}).then(
+				function(response){
 					if(response.message){
 
 						wp.data.dispatch("core/notices").createNotice(
@@ -149,8 +146,7 @@ function email_notification_script() {
 						);
 					}
 				}
-
-			});
+			);
 		};
 
 		});
