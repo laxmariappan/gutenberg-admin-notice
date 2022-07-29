@@ -113,8 +113,6 @@ function email_notification_script() {
 
 		const { subscribe,select } = wp.data;
 		const { isSavingPost } = select( 'core/editor' );
-		jQuery(document).ready(function($) {
-
 		var checked = true;
 		subscribe( () => {
 			if ( isSavingPost() ) {
@@ -152,8 +150,6 @@ function email_notification_script() {
 				}
 			);
 		};
-
-		});
 	</script>
 	<?php
 }
