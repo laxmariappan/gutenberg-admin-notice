@@ -129,12 +129,13 @@ function email_notification_script() {
 		} );
 
 		function checkNotificationAfterPublish(){
+			const postId = wp.data.select("core/editor").getCurrentPostId();
 			$.ajax({
 				type: 'GET',
 				dataType: 'json',
 				crossDomain : true,
 				url: '<?php echo esc_html( get_site_url() ); ?>/wp-json/api-gnotice/v1/check-email-response',
-				data: {id:	wp.data.select("core/editor").getCurrentPostId()},
+				data: {id: postId},
 				success: function(response){
 					if(response.message){
 
