@@ -130,8 +130,12 @@ function email_notification_script() {
 
 		function checkNotificationAfterPublish(){
 			const postId = wp.data.select("core/editor").getCurrentPostId();
+			const url = wp.url.addQueryArgs(
+				'/wp-json/api-gnotice/v1/check-email-response',
+				{ id: postId },
+			);
 			wp.apiFetch({
-				url: `/wp-json/api-gnotice/v1/check-email-response?id=${postId}`,
+				url,
 			}).then(
 				function(response){
 					if(response.message){
