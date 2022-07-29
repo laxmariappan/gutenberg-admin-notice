@@ -129,13 +129,11 @@ function email_notification_script() {
 		} );
 
 		function checkNotificationAfterPublish(){
-			$.ajax({
-				type: 'GET',
-				dataType: 'json',
-				crossDomain : true,
-				url: '<?php echo esc_html( get_site_url() ); ?>/wp-json/api-gnotice/v1/check-email-response',
-				data: {id:	wp.data.select("core/editor").getCurrentPostId()},
-				success: function(response){
+			const postId = wp.data.select("core/editor").getCurrentPostId();
+			wp.apiFetch({
+				url: `/wp-json/api-gnotice/v1/check-email-response?id=${postId}`,
+			}).then(
+				function(response){
 					if(response.message){
 
 						wp.data.dispatch("core/notices").createNotice(
@@ -148,8 +146,7 @@ function email_notification_script() {
 						);
 					}
 				}
-
-			});
+			);
 		};
 
 		});
